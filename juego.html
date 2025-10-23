@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>RPG — Juego</title>
+</head>
+<body>
+<main>
+    <h1>RPG</h1>
+    <p id="saludo"></p>
+</main>
+<script type="module">
+    const raw = sessionStorage.getItem("usuarioLogeado");
+    if (!raw) location.replace("index.html");
+    else {
+        const u = JSON.parse(raw);
+        document.getElementById("saludo").textContent =
+            `¡Bienvenido/a, ${u.nombre} ${u.apellido}!`;
+    };
+
+</script>
+</body>
+</html>
