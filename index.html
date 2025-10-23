@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>RPG — Login</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<main class="container">
+    <h1>Acceso</h1>
+    <form id="loginForm" novalidate>
+        <label>Usuario
+            <input id="usuario" name="usuario" autocomplete="username" required>
+        </label>
+        <label>Contraseña
+            <input id="password" name="password" type="password" autocomplete="current-password" required>
+        </label>
+        <button type="submit">Entrar</button>
+        <p id="msg" aria-live="polite"></p>
+    </form>
+</main>
+<script type="module" src="js/main.js"></script>
+</body>
+</html>
