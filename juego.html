@@ -1,24 +1,44 @@
 <!doctype html>
 <html lang="es">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>RPG — Juego</title>
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-<main>
-    <h1>RPG</h1>
-    <p id="saludo"></p>
-</main>
-<script type="module">
-    const raw = sessionStorage.getItem("usuarioLogeado");
-    if (!raw) location.replace("index.html");
-    else {
-        const u = JSON.parse(raw);
-        document.getElementById("saludo").textContent =
-            `¡Bienvenido/a, ${u.nombre} ${u.apellido}!`;
-    };
+<main class="container">
 
-</script>
+    <section id="infoPanel">
+        <h1>RPG</h1>
+        <p id="playerName"></p>
+        <p>
+            Dificultad:
+            <span id="difficultyLabel"></span>
+            ·
+            Nivel:
+            <span id="levelLabel"></span>
+        </p>
+
+        <p>Fase actual: <span id="phaseLabel"></span></p>
+        <p>Tiempo: <span id="timerValue"></span> s</p>
+        <p>Energía: <span id="energyValue">0</span></p>
+
+        <p>Jugador HP: <span id="playerHp"></span></p>
+        <p>Enemigo HP: <span id="enemyHp"></span></p>
+    </section>
+
+    <section id="gameArea">
+        <h2>Zona de Juego</h2>
+        <div id="board" class="board"></div>
+    </section>
+
+    <section id="actions">
+
+    </section>
+
+</main>
+
+<script type="module" src="js/main.js"></script>
 </body>
 </html>

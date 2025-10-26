@@ -5,7 +5,7 @@ function mapDifficultyToSeconds(diff) {
         case "easy":        return 12;
         case "normal":      return 9;
         case "hard":        return 6;
-        default:            return 9;
+        default:            return 12;
     }
 }
 
