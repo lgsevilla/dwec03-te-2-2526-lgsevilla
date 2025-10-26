@@ -1,7 +1,12 @@
 import { mountLoginUI } from "./ui/login.ui.js";
+import { mountBienvenidaUI } from "./ui/bienvenida.ui.js";
 
 document.addEventListener("DOMContentLoaded", () => {
-    // aquí podrías enrutar si luego hay más pantallas
-    const form = document.getElementById("loginForm");
-    if (form) mountLoginUI();
+    if (document.getElementById("loginForm")) {
+        mountLoginUI();
+    }
+
+    if (document.getElementById("nivelGrid")) {
+        mountBienvenidaUI();
+    }
 });
