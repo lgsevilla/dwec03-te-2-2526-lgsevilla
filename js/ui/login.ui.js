@@ -30,6 +30,6 @@ export async function mountLoginUI() {
             loginDate: new Date().toISOString()
         }));
 
-        window.location.href = "juego.html"
+        window.location.href = "bienvenida.html"
     });
 }

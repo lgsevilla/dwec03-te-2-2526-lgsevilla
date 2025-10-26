@@ -1,4 +1,4 @@
-import { GameSettings } from './gameSettings.model.js';
+import { GameSettings } from '../model/gameSettings.model.js';
 
 const LS_UNLOCK_KEY = "unlockedLevels";
 const SS_SETTINGS_KEY = "game_settings";
