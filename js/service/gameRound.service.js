@@ -1,6 +1,6 @@
 import { RoundState } from "../model/roundState.model.js";
 import { loadGameSettings } from "../data/gameSettings.data.js";
-import { isWordValidBasque } from "../data/words.data.js";
+import { isWordValidBasque, WORDS_BASQUE } from "../data/words.data.js";
 import { applyPlayerActionsAndAdvance } from "./battle.service.js";
 
 let roundState = null;
@@ -55,12 +55,52 @@ function randomLetter() {
     return LETTER_POOL[i];
 }
 
+function pickSeedWords(howMany = 3) {
+    const maxCount = Math.min(howMany, WORDS_BASQUE.length);
+
+    const chosen = new Set();
+    while (chosen.size < maxCount) {
+        const w = WORDS_BASQUE[Math.floor(Math.random() * WORDS_BASQUE.length)];
+        chosen.add(w);
+    }
+    return Array.from(chosen);
+}
+
+function shuffleArray(arr) {
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+}
+
 export function generateBoardCells(level) {
     const totalCells = 8 + (level - 1);
 
-    const cells = Array.from({ length: totalCells}, (_, i) => ({
-        id: i,
-        letter: randomLetter(),
+    let seedCount = 3;
+    if (level >= 3) seedCount = 4;
+    if (level >= 5) seedCount = 5;
+
+    const seeds = pickSeedWords(seedCount);
+
+    const letters = [];
+    seeds.forEach(w => {
+        for (const ch of w) {
+            letters.push(ch);
+        }
+    });
+
+    while (letters.length < totalCells) {
+        letters.push(randomLetter());
+    }
+
+    const trimmed = letters.slice(0, totalCells);
+
+    shuffleArray(trimmed);
+
+    const cells = trimmed.map((ch, idx) => ({
+        id: idx,
+        letter: ch,
         selected: false,
     }));
 

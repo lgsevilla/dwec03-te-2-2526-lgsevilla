@@ -1,188 +1,265 @@
 
 const WORD_LIST = [
-    // nature / environment
-    "sua",      // fire
-    "suge",     // snake
-    "mendi",    // mountain
-    "harri",    // stone
-    "hodei",    // cloud
-    "eguzki",   // sun
-    "ilargi",   // moon
-    "izar",     // star
-    "euria",    // rain
-    "haize",    // wind
-    "itsaso",   // sea
-    "baso",     // forest
-    "lur",      // earth
-    "ibai",     // river
-    "mendiak",  // mountains (plural)
-    "landa",    // field / countryside
-    "hondar",   // sand
-    "uharri",   // gravel/stone (compact form ok)
-    "basa",     // wild
+    // nature / environment (and their -a / -ak forms)
+    "sua", "suak",
+    "suge", "sugea", "sugeak",
+    "mendi", "mendia", "mendiak",
+    "harri", "harria", "harriak",
+    "hodei", "hodeia", "hodeiak",
+    "eguzki", "eguzkia", "eguzkiak",
+    "ilargi", "ilargia", "ilargiak",
+    "izar", "izara", "izarak",
+    "euria", // "euri" is also used, include both
+    "euri", "euria", "euriak",
+    "haize", "haizea", "haizeak",
+    "itsaso", "itsasoa", "itsasoak",
+    "baso", "basoa", "basoak",
+    "lur", "lurra", "lurrak",
+    "ibai", "ibaia", "ibaiak",
+    "landa", "landak",
+    "hondar", "hondarra", "hondarrak",
+    "uharri", "uharria", "uharriak",
+    "basa", "basak",
 
     // animals
-    "otso",     // wolf
-    "txakur",   // dog
-    "miau",     // cat sound but fun, keep?
-    "katu",     // cat
-    "behi",     // cow
-    "ahuntz",   // goat
-    "zaldi",    // horse
-    "txori",    // bird
-    "arrain",   // fish
-    "arkakuso", // flea (funny but longish -> 8 letters)
-    "sagu",     // mouse
-    "txin",     // bug/ant-ish (short but okay)
-    "igel",     // frog
-    "txoriak",  // birds (plural)
+    "otso", "otsoa", "otsoak",
+    "txakur", "txakura", "txakurrak",
+    "miau", "miauak",
+    "katu", "katua", "katuak",
+    "behi", "behia", "behiak",
+    "ahuntz", "ahuntza", "ahuntzak",
+    "zaldi", "zaldia", "zaldiak",
+    "txori", "txoria", "txoriak",
+    "arrain", "arraina", "arrainak",
+    "arkakuso", "arkakusoa", "arkakusoak",
+    "sagu", "sagua", "saguak",
+    "txin", "txina", "txinak",
+    "igel", "igela", "igelak",
 
-    // body / health / feelings
-    "odol",     // blood
-    "bihotz",   // heart
-    "buru",     // head
-    "begi",     // eye
-    "belarri",  // ear
-    "aho",      // mouth
-    "sudur",    // nose
-    "esku",     // hand
-    "hanka",    // leg
-    "bizkar",   // back
-    "sorbald",  // shoulder (shortened 'sorbald(a)')
-    "gorputz",  // body
-    "bizia",    // life
-    "mina",     // pain
-    "nekea",    // tiredness/fatigue
-    "pozik",    // happy
-    "triste",   // sad
-    "beldur",   // fear
-    "amets",    // dream
-    "ametsa",   // dream (noun)
-    "haserre",  // angry
-    "barre",    // laugh/laughter
-    "nekatuta", // tired (this is 8+ letters, acceptable if <=8)
-    "lo",       // sleep (too short, we'll filter it out later)
-    "arnasa",   // breath
-    "zauri",    // wound
-    "sendu",    // heal/recover
-    "zaindu",   // to protect / take care of
+    // body / health / physical things (and forms)
+    "odol", "odola", "odolak",
+    "bihotz", "bihotza", "bihotzak",
+    "buru", "burua", "buruak",
+    "begi", "begia", "begiak",
+    "belarri", "belarria", "belarriak",
+    "aho", "ahoa", "ahoak",
+    "sudur", "sudura", "sudurak",
+    "esku", "eskua", "eskuak",
+    "hanka", "hankak",
+    "bizkar", "bizkarra", "bizkarrak",
+    "sorbald", "sorbalda", "sorbladak", // slight stem fudge to keep coverage
+    "gorputz", "gorputza", "gorputzak",
+    "bizia", "biziak", // also life as noun
+    "mina", "minak",
+    "nekea", "nekeak",
+    "zauri", "zauria", "zauriak",
+    "arnasa", "arnasak",
+    "arnastu", // verb (no forms)
+    "sendu",   // verb
+    "sendatu", // verb
+    "zaindu",  // verb
+    "nekatuta", // adjective participle
+    "pozik",
+    "triste",
+    "beldur", "beldurra", "beldurrak",
+    "amets", "ametsa", "ametsak",
+    "haserre",
+    "barre",
+    "ausart", "ausarta", "ausartak",
+    "indartsu", "indartsua", "indartsuak",
+    "gaixorik",
+    "osorik",
+    "bizirik",
+    "hilda",
+    "hil", // verb root 'to die'
+    "hildu", // kill/has died (verbish)
+    "aurpegi", "aurpegia", "aurpegiak",
+    "aurpegia", // keep explicit
+    "begiak", // kept, already covered via forms but valid
 
-    // actions / verbs
-    "etorri",   // come
-    "joan",     // go/leave
-    "ibil",     // walk (root)
-    "ibilki",   // walk/go along
-    "ibili",    // to walk/go around
-    "korrika",  // run
-    "salta",    // jump
-    "erori",    // fall
-    "igo",      // climb up
-    "bota",     // throw
-    "hartu",    // take
-    "eman",     // give
-    "emanak",   // given
-    "ekarri",   // bring
-    "pentsa",   // think
-    "ikusi",    // see
-    "entzun",   // hear
-    "bilatu",   // search
-    "aurkitu",  // find
-    "itxaron",  // wait
-    "lagundu",  // help
-    "babestu",  // protect/defend
-    "zaindu",   // take care
-    "ihes",     // escape
-    "borrok",   // fight (root of 'borroka')
-    "borroka",  // fight/battle
-    "eraso",    // attack
-    "defenda",  // defend (root/imperative)
-    "salbatu",  // save/rescue
+    // combat / danger / power / enemies (and forms)
+    "kolpe", "kolpea", "kolpeak",
+    "indar", "indarra", "indarrak",
+    "botere", "boterea", "botereak",
+    "energia", "energiak",
+    "arma", "armak",
+    "ezpata", "ezpatak",
+    "arku", "arkua", "arkuak",
+    "gezia", "geziak",
+    "arrisku", "arriskua", "arriskuak",
+    "etsai", "etsaia", "etsaiak",
+    "arerio", "arerioa", "arerioak",
+    "babes", "babesa", "babesak",
+    "zaintza", "zaintzak",
+    "seguru", "segurua", "seguruak", // treating as noun-y 'security'
+    "sorgin", "sorgina", "sorginak",
+    "deabru", "deabrua", "deabruak",
+    "munstro", "munstroa", "munstroak",
+    "izaki", "izakia", "izakiak",
+    "pozoia", "pozoia", "pozoia", "pozoia", // keep; base 'pozoia' is already definite, still usable
+    "sumendi", "sumendia", "sumendiak",
+    "zaindari", "zaindaria", "zaindariak",
+    "zalantza", "zalantzak",
+    "misterio", "misterioak",
 
-    // combat / danger / power
-    "kolpe",    // hit
-    "indar",    // force, strength
-    "botere",   // power
-    "energia",  // energy
-    "arma",     // weapon
-    "armak",    // weapons
-    "ezpata",   // sword
-    "arku",     // bow
-    "gezia",    // arrow
-    "arrisku",  // danger
-    "etsai",    // enemy
-    "arerio",   // rival/enemy
-    "babes",    // protection
-    "zaintza",  // guarding
-    "seguru",   // safe
-    "sorgin",   // witch
-    "deabru",   // demon/devil
-    "munstro",  // monster
-    "izaki",    // creature/being
-    "izakia",   // being (with article)
-    "pozoia",   // poison
-    "sumendi",  // volcano
-    "sukurts",  // eh, skip weird bank forms, we won't include this
+    // actions / verbs (NO -a/-ak because they're actions, not objects)
+    "etorri",
+    "joan",
+    "ibil",
+    "ibilki",
+    "ibili",
+    "korrika",
+    "salta",
+    "erori",
+    "igo",
+    "bota",
+    "hartu",
+    "eman",
+    "emanak",
+    "ekarri",
+    "pentsa",
+    "ikusi",
+    "ikus",
+    "entzun",
+    "bilatu",
+    "aurkitu",
+    "itxaron",
+    "lagundu",
+    "babestu",
+    "ihes",
+    "borrok",
+    "borroka",
+    "eraso",
+    "defenda",
+    "salbatu",
+    "itxi",
+    "ireki",
+    "kendu",
+    "egin",
+    "eginak",
+    "eginen",
+    "ikasi",
+    "irakasle", "irakaslea", "irakasleak",
+    "ikasle", "ikaslea", "ikasleak",
+    "eskolara",
+    "ikasgai", "ikasgaia", "ikasgaiak",
+    "atseden", "atsedena", "atsedenak",
+    "jan", "janak", // treating as noun 'meal(s)'
+    "jaten",
+    "edari", "edaria", "edariak",
+    "bidean", // 'on the way'
+    "sendatu",
+    "sendu",
 
-    // objects / world / places
-    "etxe",     // house
-    "etxea",    // the house
-    "gela",     // room
-    "giltza",   // key
-    "atea",     // the door
-    "ate",      // door
-    "leiho",    // window
-    "mahai",    // table
-    "aulkia",   // chair
-    "ailu",     // (skip weird or rare forms)
-    "armairu",  // closet/cabinet
-    "armairuak",
-    "liburu",   // book
-    "papera",   // paper
-    "mapa",     // map
-    "oinatz",   // footprint/track
-    "bide",     // path / way
-    "bidea",    // the way / the path
-    "herria",   // town
-    "herri",    // people / nation
-    "etxeko",   // domestic / of the house
-    "eskolan",  // at school
-    "eskola",   // school
-    "gelako",   // of the classroom
-    "kalea",    // the street
-    "kale",     // street
-    "gaua",     // night
-    "eguna",    // day
-    "goiza",    // morning
-    "gau",      // night (short, <3 later filtered)
-    "arrats",   // root of afternoon/evening
-    "arratsa",  // evening
-    "astea",    // the week
-    "urtea",    // the year
-    "ordu",     // hour
-    "minutu",   // minute
+    // people / social / roles (forms)
+    "lagun", "laguna", "lagunak",
+    "adiskide", "adiskidea", "adiskideak",
+    "jende", "jendea", "jendeak",
+    "gizon", "gizona", "gizonak",
+    "emakume", "emakumea", "emakumeak",
+    "ume", "umea", "umeak",
+    "haur", "haurra", "haurrak",
+    "talde", "taldea", "taldeak",
+    "familia", "familiak",
 
-    // adjectives / descriptions
-    "handi",    // big
-    "txiki",    // small
-    "berri",    // new
-    "zaharra",  // old
-    "beroa",    // hot/warm
-    "hotz",     // cold
-    "azkar",    // fast
-    "motel",    // slow
-    "arraro",   // strange
-    "txarra",   // bad
-    "ona",      // good (short, <3 later filtered)
-    "ikusgarri",// impressive (too long, will be cut)
-    "erdiko",   // middle
-    "garrantzi",// importance (longer, likely >8, filtered)
-    "magia",    // magic (loan-y, but totally allowed)
-    "misterio", // mystery (8 letters, nice)
-    "iluna",    // dark (adjective)
-    "argia",    // light/bright (noun/adj)
-    "garbi",    // clean
-    "zikina",   // dirty
-    "arriskuts",// dangerous-ish truncated (we’ll drop if >8 or weird)
+    // objects / household / world / places / time (forms)
+    "etxe", "etxea", "etxeak",
+    "etxeko", // adjectival / relational, keep as-is
+    "etxera",
+    "gela", "gelak",
+    "giltza", "giltzak",
+    "atea", "ateak",
+    "ate", "atea", "ateak",
+    "leiho", "leihoa", "leihoak",
+    "mahai", "mahaia", "mahaiak",
+    "aulkia", "aulkiak",
+    "aulki", "aulkia", "aulkiak",
+    "ailu", "ailua", "ailuak", // keeping even if rare
+    "armairu", "armairua", "armairuak",
+    "liburu", "liburua", "liburuak",
+    "papera", "paperak",
+    "mapa", "mapak",
+    "oinatz", "oinatza", "oinatzak", // footprint/track-ish
+    "bide", "bidea", "bideak",
+    "herria", "herriak",
+    "herri", "herria", "herriak",
+    "eskolan",
+    "eskola", "eskolak",
+    "gelako",
+    "kale", "kalea", "kaleak",
+    "gaua", "gauak",
+    "gau", "gaua", "gauak",
+    "eguna", "egunak",
+    "egun", "eguna", "egunak",
+    "goiza", "goizak",
+    "arrats", "arratsa", "arratsak",
+    "astea", "asteak",
+    "urtea", "urteak",
+    "ordu", "ordua", "orduak",
+    "minutu", "minutua", "minutuak",
+    "lan", "lana", "lanak",
+    "kanpo", "kanpoa", "kanpoak",
+    "barru", "barrua", "barruak",
+    "hurbil", "hurbila", "hurbilak",
+    "urrun", "urruna", "urrunak",
+    "behera",
+    "behean",
+    "goian",
+    "gora",
+    "aurrera",
+    "atzera",
+    "hemen",
+    "han",
+    "noiz",
+    "non",
+    "zeren",
+    "zertan",
+    "zergatik",
+    "nola",
+    "ura", "urak",
+    "ogia", "ogiak",
+    "gatz", "gatza", "gatzak",
+    "esne", "esnea", "esneak",
+    "arrautz", "arrautza", "arrautzak",
+    "bero", "beroa", "beroak",
+    "hotz", "hotza", "hotzak",
+    "gozo", "gozoa", "gozoak",
+    "gazia", "gaziak",
+    "mingots", "mingotsa", "mingotsak",
+    "laster",
+    "mantso",
+    "motel", "motela", "motelak",
+    "berehala",
+
+    // descriptive / adjectives / qualities (forms where noun-y)
+    "handi", "handia", "handiak",
+    "txiki", "txikia", "txikiak",
+    "berri", "berria", "berriak",
+    "zaharra", "zaharrak",
+    "zaharra", // keep singular definite as written
+    "azkar", "azkarrak", "azkarra",
+    "garbi", "garbia", "garbiak",
+    "zikina", "zikinak",
+    "txarra", "txarrak",
+    "ona", "onak",
+    "erdiko", // relational adjective
+    "magia", "magiak",
+    "iluna", "ilunak",
+    "ilun", "iluna", "ilunak",
+    "argi", "argia", "argiak",
+    "argia", "argi", "argiak",
+    "ondo",
+    "gaizki",
+    "seguru", "segurua", "seguruak",
+    "misterio", "misterioak",
+    "arraro", "arraroa", "arraroak",
+    "beldurra", "beldurrak",
+
+    // extras / rare / maybe weird (kept for flavor, still filtered by length)
+    "sukurts", // weird but here if you want it
+    "garrantzi", // >8, will be filtered out
+    "ikusgarri", // >8, will be filtered
+    "arriskuts"  // borderline truncated form
 ];
 
 function isAcceptableWord(w) {
