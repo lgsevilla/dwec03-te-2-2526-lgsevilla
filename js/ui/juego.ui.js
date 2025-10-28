@@ -1,6 +1,5 @@
 import { initBattle, getBattleState } from "../service/battle.service.js";
 import {
-    startRound,
     getRoundState,
     getBoardCells,
     handleCellClick,
@@ -38,16 +37,19 @@ export function mountJuegoUI() {
     difficultyEl.textContent = String(battle.difficulty);
     levelEl.textContent = String(battle.level);
 
-    const roundInitSnapshot = startRound();
+    // const rs = getRoundState();
+    const cellsInit = getBoardCells();
 
     boardEl.innerHTML = "";
-    roundInitSnapshot.boardCells.forEach(cell => {
+    cellsInit.forEach(cell => {
         const btn = document.createElement("button");
         btn.textContent = cell.letter;
         btn.classList.add("cell");
         btn.onclick = () => handleCellClick(cell);
         boardEl.appendChild(btn);
     });
+
+    let lastRenderedRound = getBattleState().roundNumber;
 
     let pendingActions = { totalDamage: 0, totalHeal: 0 };
 
@@ -116,7 +118,7 @@ export function mountJuegoUI() {
                     msg = "Ahora no toca formar palabras!";
                     break;
                 default:
-                    msg = "Unknown error :(";
+                    msg = "Qué ha pasao? :(";
             }
             wordFeedbackEl.textContent = msg;
             wordFeedbackEl.style.color = "red";
@@ -145,7 +147,7 @@ export function mountJuegoUI() {
             actionsEl.style.display = "none";
         }
 
-        if (rs.phase === "word" && boardEl.children.length === 0) {
+        if (rs.phase === "word" && bs.roundNumber !== lastRenderedRound) {
             boardEl.innerHTML = "";
             const cells = getBoardCells();
             cells.forEach(cell => {
@@ -155,6 +157,8 @@ export function mountJuegoUI() {
                 btn.onclick = () => handleCellClick(cell);
                 boardEl.appendChild(btn);
             });
+
+            lastRenderedRound = bs.roundNumber;
         }
 
         boardEl.style.pointerEvents = rs.phase === "word" ? "auto" : "none";

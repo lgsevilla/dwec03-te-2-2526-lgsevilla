@@ -1,5 +1,5 @@
 import { BattleState } from "../model/battleState.model.js";
-import { startNewWordPhase } from "./round.service.js";
+import { startNewWordPhase } from "./gameRound.service.js";
 import { saveRoundResult } from "../data/roundState.data.js";
 
 let battleState = null;
@@ -11,6 +11,7 @@ export function initBattle(settings) {
         playerMaxHP: 30,
         enemyHP: enemyBaseHP,
         enemyMaxHP: enemyBaseHP,
+        roundNumber: 1,
         difficulty: settings.difficulty,
         level: settings.level,
     });
@@ -26,14 +27,18 @@ export function getBattleState() {
 export function applyPlayerActionsAndAdvance(playerActions) {
     if (!battleState) return;
 
-    const { damage = 0, heal = 0 } = playerActions;
-    battleState.enemyHP -= damage;
-    battleState.playerHP = Math.min(
-        battleState.playerMaxHP,
-        battleState.playerHP + heal
-    );
+    const dmg = playerActions.totalDamage || 0;
+    const heal = playerActions.totalHeal || 0;
 
-    if (battleState.enemyHP < 0) battleState.enemyHP = 0;
+    battleState.enemyHP -= dmg;
+    if (battleState.enemyHP < 0) {
+        battleState.enemyHP = 0;
+    }
+
+    battleState.playerHP += heal;
+    if (battleState.playerHP > battleState.playerMaxHP) {
+        battleState.playerHP = battleState.playerMaxHP;
+    }
 
     if (battleState.enemyHP <= 0) {
         saveRoundResult({
@@ -41,6 +46,16 @@ export function applyPlayerActionsAndAdvance(playerActions) {
             level: battleState.level,
             difficulty: battleState.difficulty,
         });
+
+        sessionStorage.setItem("battleResult", JSON.stringify({
+            outcome: "win",
+            level: battleState.level,
+            difficulty: battleState.difficulty,
+            playerHP: battleState.playerHP,
+            enemyHP: battleState.enemyHP,
+            roundNumber: battleState.roundNumber,
+        }));
+
         window.location.href = "resultados.html";
         return;
     }
@@ -56,7 +71,9 @@ export function enemyTakesTurnAndAdvance() {
     if (battleState.difficulty === "hard") enemyDamage = 5;
 
     battleState.playerHP -= enemyDamage;
-    if (battleState.playerHP < 0) battleState.playerHP = 0;
+    if (battleState.playerHP < 0) {
+        battleState.playerHP = 0;
+    }
 
     if (battleState.playerHP <= 0) {
         saveRoundResult({
@@ -64,6 +81,16 @@ export function enemyTakesTurnAndAdvance() {
             level: battleState.level,
             difficulty: battleState.difficulty,
         });
+
+        sessionStorage.setItem("battleResult", JSON.stringify({
+            outcome: "lose",
+            level: battleState.level,
+            difficulty: battleState.difficulty,
+            playerHP: battleState.playerHP,
+            enemyHP: battleState.enemyHP,
+            roundNumber: battleState.roundNumber,
+        }));
+
         window.location.href = "resultados.html";
         return;
     }
@@ -75,5 +102,6 @@ export function enemyTakesTurnAndAdvance() {
 function startNewWordPhaseFromBattle() {
     const settings = JSON.parse(sessionStorage.getItem("game_settings"));
     if (!settings) return;
+
     startNewWordPhase(settings.roundTime, battleState.level);
 }

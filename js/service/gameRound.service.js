@@ -1,26 +1,11 @@
 import { RoundState } from "../model/roundState.model.js";
-import { saveGameSettings, loadGameSettings } from "../data/gameSettings.data.js";
-import { saveRoundResult } from "../data/roundState.data.js";
+import { loadGameSettings } from "../data/gameSettings.data.js";
 import { isWordValidBasque } from "../data/words.data.js";
+import { applyPlayerActionsAndAdvance } from "./battle.service.js";
 
 let roundState = null;
 let boardCells = [];
 let timerId = null;
-
-function buildInitialRoundState() {
-    const settings = loadGameSettings();
-    if (!settings) {
-        window.location.href = "bienvenida.html";
-        return null;
-    }
-
-    return new RoundState({
-        timeLeft: settings.roundTime,
-        energyThisRound: 0,
-        phase: "word",
-        usedWords: []
-    });
-}
 
 function randomLetter() {
     const LETTER_POOL = [
@@ -82,17 +67,15 @@ export function generateBoardCells(level) {
     return cells;
 }
 
-export function startRound() {
-    const settings = loadGameSettings();
-    if (!settings) {
-        window.location.href = "bienvenida.html";
-        return { error: "no settings"};
-    }
+export function startNewWordPhase(roundTime, level) {
+    roundState = new RoundState({
+        timeLeft: roundTime,
+        energyThisRound: 0,
+        phase: "word",
+        usedWords: []
+    });
 
-    roundState = buildInitialRoundState();
-    if (!roundState) return { error: "no state" };
-
-    boardCells = generateBoardCells(settings.level);
+    boardCells = generateBoardCells(level);
 
     if (timerId) {
         clearInterval(timerId);
@@ -113,8 +96,8 @@ export function startRound() {
     }, 1000);
 
     return {
-        level: settings.level,
-        difficulty: settings.difficulty,
+        level: level,
+        difficulty: loadGameSettings()?.difficulty,
         timeLeft: roundState.timeLeft,
         phase: roundState.phase,
         energyThisRound: roundState.energyThisRound,
@@ -173,11 +156,14 @@ export function submitWord(rawWord) {
 
     roundState.usedWords.push(word);
     roundState.energyThisRound += 1;
+
     return { ok: true };
 }
 
 export function finishPlayerActionPhase(pendingActions) {
     if (!roundState || roundState.phase !== "playerAction") return;
-    // TODO: battle states to tie in to battle.service.js
+
     roundState.phase = "enemyAction";
+
+    applyPlayerActionsAndAdvance(pendingActions);
 }
