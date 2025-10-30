@@ -1,3 +1,5 @@
+import { unlockNextLevel } from "../service/playerProgress.service.js";
+
 function getBattleResult() {
     const raw = sessionStorage.getItem("battleResult");
     if (!raw) return null;
@@ -22,22 +24,6 @@ function saveGameSettings(obj) {
     sessionStorage.setItem("game_settings", JSON.stringify(obj));
 }
 
-function loadPlayerProgress() {
-    const raw = localStorage.getItem("playerProgress");
-    if (!raw) {
-        return { maxLevelUnlocked: 1 };
-    }
-    try {
-        return JSON.parse(raw);
-    } catch {
-        return { maxLevelUnlocked: 1 };
-    }
-}
-
-function savePlayerProgress(progressObj) {
-    localStorage.setItem("playerProgress", JSON.stringify(progressObj));
-}
-
 function buildButton(label, className, onClick) {
     const btn = document.createElement("button");
     btn.textContent = label;
@@ -55,7 +41,7 @@ function renderNoDataState() {
     titleEl.textContent = "Sin datos";
     titleEl.classList.add("resultado-title-generic");
 
-    subtitleEl.textContent = "No hay combate receiente.";
+    subtitleEl.textContent = "No hay combate reciente.";
 
     statsBox.style.display = "none";
 
@@ -86,28 +72,23 @@ function renderResultState(data) {
     group.innerHTML = "";
 
     if (outcome === "win") {
-        titleEl.textContent = "Victooooooooria!!!";
+        titleEl.textContent = "¡Victoria!";
         titleEl.classList.add("resultado-title-win");
 
-        subtitleEl.textContent = "Has derrotado al enemigo!";
+        subtitleEl.textContent = "Has derrotado al enemigo.";
         subtitleEl.classList.add("resultado-subtitle-win");
 
-        const progress = loadPlayerProgress();
-        const nextLevel = level + 1;
-
-        if (nextLevel > progress.maxLevelUnlocked) {
-            progress.maxLevelUnlocked = nextLevel;
-            savePlayerProgress(progress);
-        }
+        unlockNextLevel(level);
 
         const gs = getGameSettings();
         if (gs) {
+            const nextLevel = level + 1;
             gs.level = nextLevel;
             saveGameSettings(gs);
         }
 
         const nextBtn = buildButton(
-            "Siguiente nivel!",
+            "Siguiente nivel",
             "resultado-btn resultado-btn-primary",
             () => {
                 window.location.href = "juego.html";
@@ -128,7 +109,7 @@ function renderResultState(data) {
         titleEl.textContent = "Has caído... :(";
         titleEl.classList.add("resultado-title-lose");
 
-        subtitleEl.textContent = "Levántate, lucha otra vez!";
+        subtitleEl.textContent = "Levántate y lucha otra vez.";
         subtitleEl.classList.add("resultado-subtitle-lose");
 
         const retryBtn = buildButton(

@@ -10,12 +10,15 @@ export function mountJuegoUI() {
     const playerNameEl = document.getElementById("playerName");
     const difficultyEl = document.getElementById("difficultyLabel");
     const levelEl = document.getElementById("levelLabel");
+    const phaseEl = document.getElementById("phaseLabel");
+    const roundEl = document.getElementById("roundValue");
+
     const timerEl = document.getElementById("timerValue");
     const energyEl = document.getElementById("energyValue");
 
     const playerHpEl = document.getElementById("playerHp");
     const enemyHpEl = document.getElementById("enemyHp");
-    const phaseEl = document.getElementById("phaseLabel");
+
     const boardEl = document.getElementById("board");
     const actionsEl = document.getElementById("actions");
 
@@ -42,6 +45,13 @@ export function mountJuegoUI() {
     const battle = initBattle(settings);
 
     difficultyEl.textContent = String(battle.difficulty);
+    const difficultyMap = {
+        easy: "Fácil",
+        normal: "Normal",
+        hard: "Difícil"
+    };
+    difficultyEl.textContent = difficultyMap[battle.difficulty] || battle.difficulty;
+
     levelEl.textContent = String(battle.level);
 
     // const rs = getRoundState();
@@ -140,11 +150,13 @@ export function mountJuegoUI() {
         const bs = getBattleState();
         if (!rs || !bs) return;
 
+        phaseEl.textContent = phaseLabel(rs.phase);
         timerEl.textContent = rs.timeLeft;
         energyEl.textContent = rs.energyThisRound;
         playerHpEl.textContent = `${bs.playerHP} / ${bs.playerMaxHP}`;
         enemyHpEl.textContent = `${bs.enemyHP} / ${bs.enemyMaxHP}`;
-        phaseEl.textContent = phaseLabel(rs.phase);
+        roundEl.textContent = bs.roundNumber;
+
 
         if (rs.phase === "word") {
             wordEntryEl.style.display = "block";

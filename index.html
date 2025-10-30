@@ -3,23 +3,31 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>RPG — Login</title>
+    <title>Basque Builder RPG — Login</title>
     <link rel="stylesheet" href="css/styles.css">
 </head>
-<body>
-<main class="container">
-    <h1>Acceso</h1>
-    <form id="loginForm" novalidate>
-        <label>Usuario
-            <input id="usuario" name="usuario" autocomplete="username" required>
-        </label>
-        <label>Contraseña
-            <input id="password" name="password" type="password" autocomplete="current-password" required>
-        </label>
-        <button type="submit">Entrar</button>
-        <p id="msg" aria-live="polite"></p>
-    </form>
+<body class="login-body">
+<main class="login-container">
+    <section class="login-header">
+        <h1 class="game-title">Basque Builder RPG</h1>
+        <p class="subtitle">Forma palabras. Carga energía mágica. Derrota al enemigo.</p>
+    </section>
+
+    <section class="login-panel panel">
+        <h2>Iniciar sesión</h2>
+        <form id="loginForm" novalidate>
+            <label>Usuario
+                <input id="usuario" name="usuario" autocomplete="username" required>
+            </label>
+            <label>Contraseña
+                <input id="password" name="password" type="password" autocomplete="current-password" required>
+            </label>
+            <button type="submit">Entrar</button>
+            <p id="msg" aria-live="polite"></p>
+        </form>
+    </section>
 </main>
+
 <script type="module" src="js/main.js"></script>
 </body>
 </html>

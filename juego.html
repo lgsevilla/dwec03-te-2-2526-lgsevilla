@@ -7,38 +7,72 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-<main class="container">
+<main class="game-shell"><!-- NEW wrapper specifically for the game screen -->
 
-    <section id="infoPanel">
-        <h1>RPG</h1>
-        <p id="playerName"></p>
-        <p>
-            Dificultad:
-            <span id="difficultyLabel"></span>
-            ·
-            Nivel:
-            <span id="levelLabel"></span>
-        </p>
+    <!-- LEFT HUD -->
+    <aside class="hud-left panel">
+        <div class="hud-enemy">
+            <h2>Enemigo</h2>
+            <p class="hud-label">HP Enemigo:
+                <span id="enemyHp" class="hud-enemy-hp"></span>
+            </p>
+        </div>
 
-        <p>Fase actual: <span id="phaseLabel"></span></p>
-        <p>Tiempo: <span id="timerValue"></span> s</p>
-        <p>Energía: <span id="energyValue">0</span></p>
+        <div class="hud-player">
+            <h2>Tú</h2>
+            <p class="hud-label">HP:
+                <span id="playerHp" class="hud-player-hp"></span>
+            </p>
+            <p class="hud-label">Energía:
+                <span id="energyValue" class="hud-energy">0</span>
+            </p>
+        </div>
+    </aside>
 
-        <p>Jugador HP: <span id="playerHp"></span></p>
-        <p>Enemigo HP: <span id="enemyHp"></span></p>
-    </section>
+    <!-- CENTER PLAY AREA -->
+    <section class="game-center panel">
+        <div class="timer-block">
+            <span class="timer-label">Tiempo</span>
+            <span id="timerValue" class="timer-value">0</span>
+            <span class="timer-suffix">s</span>
+        </div>
 
-    <section id="gameArea">
         <div id="board" class="board"></div>
 
-        <div id="wordEntry">
+        <div id="wordEntry" class="word-entry">
             <input id="wordInput" autocomplete="off" />
             <button id="sendWordBtn">Usar palabra</button>
             <p id="wordFeedback" class="status"></p>
         </div>
+
+        <section id="actions" class="actions-panel"></section>
     </section>
 
-    <section id="actions"></section>
+    <!-- RIGHT HUD -->
+    <aside class="hud-right panel">
+        <h1 class="game-title">RPG</h1>
+        <p id="playerName" class="welcome"></p>
+
+        <p class="meta-row">
+            <span class="meta-label">Dificultad:</span>
+            <span id="difficultyLabel" class="meta-value"></span>
+        </p>
+
+        <p class="meta-row">
+            <span class="meta-label">Nivel:</span>
+            <span id="levelLabel" class="meta-value"></span>
+        </p>
+
+        <p class="meta-row">
+            <span class="meta-label">Fase:</span>
+            <span id="phaseLabel" class="meta-phase"></span>
+        </p>
+
+        <p class="round-row">
+            <span class="meta-label">Ronda:</span>
+            <span id="roundValue" class="meta-value"></span>
+        </p>
+    </aside>
 
 </main>
 

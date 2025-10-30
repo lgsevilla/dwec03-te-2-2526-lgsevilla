@@ -1,0 +1,792 @@
+/* ===============================
+   Word Builder RPG — Global Styles
+   Shared by login, bienvenida, juego, resultados
+   =============================== */
+
+/* ---------- RESET ---------- */
+* {
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    margin: 0;
+    padding: 0;
+}
+
+/* ---------- THEME VARIABLES ---------- */
+:root {
+    --bg-main: #0f172a;
+    --bg-panel: rgba(15,23,42,0.6);
+    --bg-panel-alt: #2a324b;
+    --border-panel: rgba(148,163,184,0.2);
+
+    --text-main: #f8fafc;
+    --text-dim: #94a3b8;
+    --text-good: #4ade80;
+    --text-warn: #facc15;
+    --text-bad: #f87171;
+    --text-accent: #93c5fd;
+
+    --accent-solid: #6366f1;
+    --accent-solid-hover: #4f46e5;
+
+    --radius-card: 12px;
+    --radius-btn: 10px;
+
+    --gap-lg: 2rem;
+    --gap-md: 1rem;
+    --gap-sm: 0.5rem;
+
+    --font-stack: system-ui, -apple-system, BlinkMacSystemFont, "Inter", "Roboto", "Segoe UI", sans-serif;
+}
+
+/* ---------- BODY LAYOUT ---------- */
+body {
+    background:
+            radial-gradient(circle at 20% 20%, rgba(80,100,255,0.12) 0%, rgba(0,0,0,0) 60%),
+            radial-gradient(circle at 80% 30%, rgba(0,200,255,0.08) 0%, rgba(0,0,0,0) 60%),
+            var(--bg-main);
+    color: var(--text-main);
+    font-family: var(--font-stack);
+    line-height: 1.4;
+    min-height: 100vh;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: var(--gap-lg);
+}
+
+/* default page container (legacy .container usage for login etc.) */
+.container {
+    width: 100%;
+    max-width: 900px;
+    display: grid;
+    gap: var(--gap-lg);
+}
+
+/* ---------- TYPOGRAPHY ---------- */
+h1 {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--text-main);
+    letter-spacing: -0.03em;
+    margin-bottom: var(--gap-sm);
+    text-shadow: 0 2px 6px rgba(0,0,0,0.6);
+}
+
+h2 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-accent);
+    margin-bottom: var(--gap-sm);
+}
+
+.subtitle {
+    color: var(--text-dim);
+    font-size: 0.9rem;
+    line-height: 1.4;
+    margin-bottom: var(--gap-md);
+}
+
+.hint {
+    color: var(--text-dim);
+    font-size: 0.8rem;
+    line-height: 1.4;
+    margin-bottom: var(--gap-sm);
+}
+
+.status {
+    font-size: 0.8rem;
+    line-height: 1.3;
+    margin-top: var(--gap-sm);
+    min-height: 1.2em;
+    color: var(--text-dim);
+}
+
+.status.ok { color: var(--text-good); }
+.status.err { color: var(--text-bad); }
+
+/* ---------- PANEL / CARD ---------- */
+.panel {
+    background: var(--bg-panel);
+    border: 1px solid var(--border-panel);
+    border-radius: var(--radius-card);
+    padding: 1rem 1.25rem 1.25rem;
+    box-shadow:
+            0 20px 60px rgba(0,0,0,0.7),
+            0 2px 4px rgba(0,0,0,0.7) inset;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.panel ul {
+    margin: 0;
+    padding-left: 1.25rem;
+    list-style-position: outside;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    color: #e5e7eb;
+}
+.panel ul li {
+    margin-bottom: 0.5rem;
+}
+
+/* ---------- FORM ELEMENTS ---------- */
+form {
+    display: grid;
+    gap: var(--gap-md);
+    background: var(--bg-panel);
+    border: 1px solid var(--border-panel);
+    border-radius: var(--radius-card);
+    padding: var(--gap-md);
+    box-shadow:
+            0 20px 60px rgba(0,0,0,0.7),
+            0 2px 4px rgba(0,0,0,0.7) inset;
+}
+
+label {
+    display: grid;
+    gap: 0.4rem;
+    font-size: 0.9rem;
+    color: var(--text-dim);
+}
+
+input {
+    background: #0f172a;
+    border: 1px solid var(--border-panel);
+    border-radius: var(--radius-btn);
+    padding: 0.6rem 0.75rem;
+    color: var(--text-main);
+    font-size: 0.9rem;
+    outline: none;
+}
+
+input:focus {
+    border-color: var(--accent-solid);
+    box-shadow: 0 0 8px var(--accent-solid);
+}
+
+/* ---------- BUTTONS ---------- */
+button {
+    cursor: pointer;
+    background: var(--accent-solid);
+    border: 0;
+    border-radius: var(--radius-btn);
+    padding: 0.6rem 0.9rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #fff;
+    text-shadow: 0 1px 1px rgba(0,0,0,0.6);
+    transition: background .12s, box-shadow .12s, transform .12s;
+}
+
+button:hover:not(:disabled) {
+    background: var(--accent-solid-hover);
+    transform: translateY(-1px) scale(1.02);
+}
+
+button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+/* ===============================
+   WELCOME PAGE (bienvenida.html)
+   =============================== */
+
+/* main shell */
+.welcome-layout {
+    width: 100%;
+    max-width: 1200px;
+    display: grid;
+    gap: var(--gap-lg);
+    margin: 0 auto;
+}
+
+/* header (title + subtitle on the left) */
+.game-header {
+    max-width: 320px;
+}
+
+/* the top row: "Cómo se juega" panel */
+.row-upper {
+    display: grid;
+    gap: var(--gap-lg);
+}
+
+/* the bottom row (Nivel | Dificultad | Comenzar) */
+.row-lower {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--gap-lg);
+    align-items: flex-start;
+}
+
+/* content inside "Cómo se juega" */
+.howto-list {
+    font-size: 0.9rem;
+    color: var(--text-main);
+    line-height: 1.4;
+    padding-left: 1.2rem;
+}
+.howto-list li {
+    margin-bottom: 0.5rem;
+}
+
+/* wrapper for Start button + message (NOT a panel) */
+.start-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-sm);
+    flex: 1 1 160px;
+}
+
+/* start button style */
+.start-wrapper .start-btn {
+    background: var(--accent-solid);
+    border: 0;
+    font-size: 0.9rem;
+    font-weight: 600;
+    padding: 0.8rem 1.4rem;
+    border-radius: var(--radius-btn);
+    color: #fff;
+    text-shadow: 0 1px 1px rgba(0,0,0,0.6);
+    box-shadow: 0 16px 32px rgba(99,102,241,0.4);
+    transition: background .12s, transform .12s, box-shadow .12s;
+}
+.start-wrapper .start-btn:hover {
+    background: var(--accent-solid-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 20px 40px rgba(99,102,241,0.5);
+}
+.start-wrapper .status {
+    color: var(--text-dim);
+    font-size: 0.85rem;
+    min-height: 1.2em;
+}
+
+/* base ordering for mobile: Nivel → Dificultad → Start */
+.nivel-panel      { order: 1; flex: 1 1 260px; }
+.dificultad-panel { order: 2; flex: 1 1 260px; }
+.start-wrapper    { order: 3; }
+
+/* ---------- DESKTOP LAYOUT ---------- */
+@media (min-width: 900px) {
+
+    /* Two-row grid:
+       Row 1: header | howto | (optional diff top)
+       Row 2: row-lower (level + diff + start) centered together
+    */
+    .welcome-layout {
+        grid-template-columns: minmax(240px, 300px) 1fr minmax(240px, 300px);
+        grid-template-areas:
+            "header howto diff"
+            "lower  lower lower";
+        align-items: start;
+    }
+
+    .game-header {
+        grid-area: header;
+    }
+
+    .row-upper {
+        grid-area: howto;
+    }
+
+    /* If you render a difficulty card in the top right, it would sit in grid-area: diff;
+       It's fine if that area is empty visually. */
+
+    .row-lower {
+        grid-area: lower;
+
+        flex-wrap: nowrap;
+        align-items: flex-start;
+
+        /* keep (nivel + dificultad + button) as a cluster */
+        max-width: 900px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    /* desktop order: Nivel | Dificultad | Start */
+    .nivel-panel {
+        order: 1;
+        flex: 0 0 auto;
+        min-width: 280px;
+    }
+
+    .dificultad-panel {
+        order: 2;
+        flex: 0 0 auto;
+        min-width: 260px;
+    }
+
+    .start-wrapper {
+        order: 3;
+        flex: 0 0 auto;
+
+        /* sit to the right of dificultad, but not glued to viewport edge */
+        margin-left: var(--gap-lg);
+
+        align-self: flex-start;
+        padding-top: 0.5rem;
+    }
+
+    /* even heights for the two cards if helpful */
+    .row-lower .panel {
+        min-height: 100%;
+    }
+}
+
+/* ---------- MOBILE LAYOUT ---------- */
+@media (max-width: 899px) {
+    .welcome-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .row-upper {
+        grid-template-columns: 1fr;
+    }
+
+    .row-lower {
+        flex-direction: column;
+        max-width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .nivel-panel      { order: 1; width: 100%; }
+    .dificultad-panel { order: 2; width: 100%; }
+    .start-wrapper    { order: 3; width: 100%; }
+}
+
+/* =========================================================
+   GAME SCREEN (juego.html)
+   ========================================================= */
+
+/* shell for HUD left / center play / HUD right */
+.game-shell {
+    width: 100%;
+    max-width: 1200px;
+    display: grid;
+    grid-template-columns: minmax(180px, 220px) 1fr minmax(180px, 220px);
+    gap: var(--gap-lg);
+    align-items: start;
+}
+
+.hud-left,
+.hud-right,
+.game-center {
+    display: grid;
+    gap: var(--gap-md);
+}
+
+.panel-heading {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-accent);
+    margin-bottom: 0.25rem;
+}
+
+.hud-label {
+    font-size: 0.85rem;
+    color: var(--text-main);
+    display: flex;
+    justify-content: space-between;
+    background: rgba(0,0,0,0.2);
+    border: 1px solid var(--border-panel);
+    border-radius: var(--radius-btn);
+    padding: 0.4rem 0.6rem;
+}
+
+.hud-enemy-hp {
+    color: var(--text-bad);
+    font-weight: 600;
+}
+.hud-player-hp {
+    color: var(--text-good);
+    font-weight: 600;
+}
+.hud-energy {
+    color: var(--text-warn);
+    font-weight: 600;
+}
+
+.game-center {
+    justify-items: center;
+    text-align: center;
+}
+
+/* timer chip */
+.timer-block {
+    display: flex;
+    align-items: baseline;
+    gap: 0.4rem;
+    background: var(--bg-panel-alt);
+    border: 1px solid var(--border-panel);
+    border-radius: var(--radius-btn);
+    padding: 0.5rem 0.75rem;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.8) inset;
+}
+.timer-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    letter-spacing: 0.05em;
+}
+.timer-value {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--text-warn);
+    line-height: 1;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+}
+.timer-suffix {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+}
+
+/* board grid */
+.board {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(48px, 1fr));
+    gap: var(--gap-sm);
+    max-width: 320px;
+    width: 100%;
+    margin-top: var(--gap-md);
+}
+.cell {
+    background: var(--bg-panel-alt);
+    border: 1px solid var(--border-panel);
+    border-radius: var(--radius-btn);
+    color: var(--text-main);
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 0.8rem 0;
+    text-align: center;
+    cursor: pointer;
+    transition: background .12s, transform .12s;
+}
+.cell:hover {
+    background: #343d5c;
+    transform: scale(1.05);
+}
+.cell.selected {
+    background: var(--accent-solid);
+    border-color: var(--accent-solid);
+}
+
+/* word entry */
+.word-entry {
+    display: grid;
+    gap: var(--gap-sm);
+    width: 100%;
+    max-width: 320px;
+    text-align: left;
+}
+.word-entry input {
+    width: 100%;
+}
+.word-entry button {
+    width: 100%;
+    background: var(--accent-solid);
+    border: 0;
+}
+.word-entry .status {
+    min-height: 1.2em;
+    font-size: 0.8rem;
+    color: var(--text-dim);
+}
+
+/* actions */
+.actions-panel {
+    display: grid;
+    gap: var(--gap-sm);
+    width: 100%;
+    max-width: 320px;
+}
+.actions-panel button {
+    width: 100%;
+    background: var(--bg-panel-alt);
+    border: 1px solid var(--border-panel);
+    border-radius: var(--radius-btn);
+    font-size: 0.85rem;
+    text-align: left;
+}
+.actions-panel button:hover {
+    background: #343d5c;
+}
+
+/* right HUD (meta info) */
+.hud-right {
+    font-size: 0.85rem;
+}
+
+.game-title-side {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-accent);
+    text-shadow: 0 2px 6px rgba(0,0,0,0.6);
+}
+
+.welcome-box {
+    font-size: 0.8rem;
+    color: var(--text-main);
+    line-height: 1.3;
+    background: rgba(0,0,0,0.2);
+    border: 1px solid var(--border-panel);
+    border-radius: var(--radius-btn);
+    padding: 0.5rem 0.6rem;
+}
+
+.meta-row,
+.round-row {
+    display: flex;
+    justify-content: space-between;
+    background: rgba(0,0,0,0.2);
+    border: 1px solid var(--border-panel);
+    border-radius: var(--radius-btn);
+    padding: 0.4rem 0.6rem;
+    margin-top: 0.4rem;
+    color: var(--text-main);
+}
+.meta-label {
+    color: var(--text-dim);
+    font-size: 0.75rem;
+}
+.meta-value {
+    font-weight: 600;
+    color: var(--text-main);
+}
+.meta-phase {
+    font-weight: 600;
+    color: var(--text-warn);
+}
+
+/* responsive gameplay shell */
+@media (max-width: 768px) {
+    .game-shell {
+        grid-template-columns: 1fr;
+    }
+
+    .hud-left,
+    .hud-right,
+    .game-center {
+        order: initial;
+    }
+
+    .hud-left,
+    .hud-right {
+        font-size: 0.9rem;
+    }
+
+    .hud-left {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .hud-enemy,
+    .hud-player {
+        background: rgba(0,0,0,0.2);
+        border: 1px solid var(--border-panel);
+        border-radius: var(--radius-card);
+        padding: var(--gap-sm);
+    }
+
+    .hud-right {
+        text-align: left;
+    }
+
+    .game-center {
+        order: -1; /* gameplay first on mobile */
+    }
+
+    .timer-block {
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+/* =========================================================
+   LOGIN PAGE (index.html)
+   ========================================================= */
+
+body.login-body {
+    display: grid;
+    place-items: center;
+    background:
+            radial-gradient(circle at 50% 30%, rgba(99,102,241,0.18) 0%, rgba(0,0,0,0) 60%),
+            var(--bg-main);
+    padding: 3rem 1rem;
+}
+
+.login-container {
+    display: grid;
+    gap: var(--gap-lg);
+    max-width: 420px;
+    width: 100%;
+    text-align: center;
+}
+
+.login-header {
+    display: grid;
+    gap: var(--gap-sm);
+}
+
+.login-header .login-game-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--text-accent);
+    text-shadow: 0 3px 10px rgba(0,0,0,0.7);
+}
+
+.login-header .subtitle {
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    margin-bottom: var(--gap-md);
+    line-height: 1.4;
+}
+
+.login-panel h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-main);
+    margin-bottom: var(--gap-sm);
+    text-align: left;
+}
+
+.login-panel form {
+    margin-top: var(--gap-sm);
+}
+
+.login-panel button {
+    margin-top: var(--gap-sm);
+    width: 100%;
+}
+
+/* =========================================================
+   RESULTADOS PAGE (resultados.html)
+   ========================================================= */
+
+.resultado-body {
+    display: grid;
+    place-items: center;
+    background:
+            radial-gradient(circle at 20% 20%, rgba(80,100,255,0.12) 0%, rgba(0,0,0,0) 60%),
+            radial-gradient(circle at 80% 30%, rgba(0,200,255,0.08) 0%, rgba(0,0,0,0) 60%),
+            var(--bg-main);
+    min-height: 100vh;
+    padding: 2rem 1rem;
+    color: var(--text-main);
+    font-family: var(--font-stack);
+}
+
+.resultado-card {
+    background: var(--bg-panel);
+    border: 1px solid var(--border-panel);
+    border-radius: var(--radius-card);
+    box-shadow:
+            0 20px 60px rgba(0,0,0,0.7),
+            0 2px 4px rgba(0,0,0,0.7) inset;
+
+    width: 100%;
+    max-width: 360px;
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.resultado-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+    color: var(--text-main);
+}
+.resultado-title-win {
+    color: var(--text-good);
+}
+.resultado-title-lose {
+    color: var(--text-bad);
+}
+
+.resultado-subtitle {
+    font-size: 0.9rem;
+    line-height: 1.4;
+    color: var(--text-dim);
+    min-height: 2em;
+    margin-bottom: 1rem;
+}
+.resultado-subtitle-win {
+    color: var(--text-good);
+}
+.resultado-subtitle-lose {
+    color: var(--text-bad);
+}
+
+.resultado-stats {
+    background: rgba(0,0,0,0.2);
+    border: 1px solid var(--border-panel);
+    border-radius: var(--radius-btn);
+    font-size: 0.8rem;
+    line-height: 1.4;
+    color: var(--text-main);
+    text-align: left;
+    padding: 0.75rem 1rem;
+    display: grid;
+    gap: 0.4rem;
+    margin-bottom: 1rem;
+}
+
+.resultado-buttons {
+    display: grid;
+    gap: var(--gap-sm);
+}
+
+.resultado-btn {
+    width: 100%;
+    border-radius: var(--radius-btn);
+    padding: 0.6rem 0.9rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-shadow: 0 1px 1px rgba(0,0,0,0.6);
+    border: 1px solid transparent;
+    transition: background .12s, box-shadow .12s, transform .12s;
+}
+
+.resultado-btn-primary {
+    background:
+            radial-gradient(circle at 20% 20%, rgba(99,102,241,0.4) 0%, rgba(0,0,0,0) 70%),
+            var(--accent-solid);
+    border-color: var(--accent-solid);
+    color: #fff;
+}
+.resultado-btn-primary:hover {
+    background: var(--accent-solid-hover);
+}
+
+.resultado-btn-neutral {
+    background: var(--bg-panel-alt);
+    border-color: var(--border-panel);
+    color: var(--text-main);
+}
+.resultado-btn-neutral:hover {
+    background: #343d5c;
+}
+
+.resultado-btn-danger {
+    background: #4b1e2a;
+    border-color: #7f1d1d;
+    color: var(--text-bad);
+    box-shadow: 0 0 12px rgba(248,113,113,0.4);
+}
+.resultado-btn-danger:hover {
+    background: #641f2e;
+    transform: translateY(-1px) scale(1.02);
+}
+
+/* generic/no-data */
+.resultado-title-generic {
+    color: var(--text-accent);
+}

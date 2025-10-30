@@ -7,64 +7,69 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-<main class="container">
-    <section>
+<main class="welcome-layout">
+
+    <!-- LEFT HEADER COLUMN (title + subtitle) -->
+    <section class="game-header">
         <h1>Word Builder RPG</h1>
-        <p class="subtitle">Forma palabras, carga energía mágica y derrota al enemigo.</p>
+        <p class="subtitle">Forma palabras en euskera, carga energía mágica y derrota al enemigo.</p>
     </section>
 
-    <!-- Instrucciones básicas -->
-    <section class="panel" id="instrucciones">
-        <h2>Cómo se juega</h2>
-        <ul>
-            <li>Usa las letras disponibles para formar palabras válidas.</li>
-            <li>Cada palabra te da energía para lanzar hechizos.</li>
-            <li>Cuando se acabe el tiempo del turno, podrás usar esa energía para atacar o curarte.</li>
-            <li>Derrota al enemigo antes de que te derrote a ti.</li>
-        </ul>
+    <!-- TOP ROW: Cómo se juega -->
+    <section class="row-upper">
+        <section class="panel instrucciones-panel">
+            <h2>Cómo se juega</h2>
+            <ul class="howto-list">
+                <li>Usa las letras disponibles para escribir palabras en euskera.</li>
+                <li>Cada palabra válida te da energía.</li>
+                <li>Cuando se acaba el tiempo, gastas esa energía para atacar o curarte.</li>
+                <li>El enemigo también ataca. Si tu vida llega a 0, pierdes.</li>
+                <li>Derrota al enemigo para desbloquear el siguiente nivel.</li>
+            </ul>
+        </section>
     </section>
 
-    <!-- Dificultad -->
-    <section class="panel">
-        <h2>Dificultad</h2>
-        <p class="hint">La dificultad controla el tiempo por turno.</p>
+    <!-- BOTTOM ROW: Nivel + Dificultad + Comenzar -->
+    <section class="row-lower">
 
-        <div id="dificultadSelector">
-            <label>
-                <input type="radio" name="dificultad" value="easy" checked>
-                Fácil (12 s / turno)
-            </label>
-            <label>
-                <input type="radio" name="dificultad" value="normal">
-                Normal (9 s / turno)
-            </label>
-            <label>
-                <input type="radio" name="dificultad" value="hard">
-                Difícil (6 s / turno)
-            </label>
-        </div>
-    </section>
+        <!-- Nivel -->
+        <section class="panel nivel-panel">
+            <h2>Nivel</h2>
+            <p class="hint">Completa niveles para desbloquear los siguientes.</p>
 
-    <!-- Selección de nivel -->
-    <section class="panel">
-        <h2>Nivel</h2>
-        <p class="hint">Completa niveles para desbloquear los siguientes.</p>
+            <div id="nivelGrid" class="level-grid">
+                <!-- buttons injected by JS -->
+            </div>
+            <p id="nivelMsg" class="status"></p>
+        </section>
 
-        <div id="nivelGrid" class="level-grid">
-            <!-- We'll render 1..5 via JS so we can mark locked -->
-            <!-- Example shape (for clarity):
-            <button data-nivel="1" class="nivel-btn selected">Nivel 1</button>
-            <button data-nivel="2" class="nivel-btn locked" disabled>Nivel 2 🔒</button>
-            ...etc.
-            -->
-        </div>
-        <p id="nivelMsg" class="status"></p>
-    </section>
+        <!-- Dificultad -->
+        <section class="panel dificultad-panel">
+            <h2>Dificultad</h2>
+            <p class="hint">La dificultad controla el tiempo por turno.</p>
 
-    <!-- Empezar -->
-    <section class="panel start-panel">
-        <button id="btnStart" class="start-btn">Comenzar</button>
-        <p id="startMsg" class="status" aria-live="polite"></p>
+            <div id="dificultadSelector">
+                <label>
+                    <input type="radio" name="dificultad" value="easy" checked>
+                    Fácil (12 s / turno)
+                </label>
+                <label>
+                    <input type="radio" name="dificultad" value="normal">
+                    Normal (9 s / turno)
+                </label>
+                <label>
+                    <input type="radio" name="dificultad" value="hard">
+                    Difícil (6 s / turno)
+                </label>
+            </div>
+        </section>
+
+        <!-- Comenzar -->
+        <section class="start-wrapper">
+            <button id="btnStart" class="start-btn">Comenzar</button>
+            <p id="startMsg" class="status" aria-live="polite"></p>
+        </section>
+
     </section>
 </main>
 
