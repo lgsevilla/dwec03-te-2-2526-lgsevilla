@@ -1,10 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="UTF-8" />
+    <title>Resultado</title>
+    <link rel="stylesheet" href="styles/resultados.css" />
 </head>
-<body>
+<body class="resultado-body">
+<main class="resultado-card">
+    <h1 id="title" class="resultado-title"></h1>
+    <p id="subtitle" class="resultado-subtitle"></p>
 
+    <section id="statsBox" class="resultado-stats">
+        <div><strong>Nivel:</strong> <span id="statLevel"></span></div>
+        <div><strong>Dificultad:</strong> <span id="statDiff"></span></div>
+        <div><strong>Ronda:</strong> <span id="statRound"></span></div>
+        <div><strong>Tu HP:</strong> <span id="statPHP"></span></div>
+        <div><strong>HP Enemigo:</strong> <span id="statEHP"></span></div>
+    </section>
+
+    <div id="buttonGroup" class="resultado-buttons"></div>
+</main>
+
+<script type="module" src="./js/ui/resultados.ui.js"></script>
 </body>
 </html>

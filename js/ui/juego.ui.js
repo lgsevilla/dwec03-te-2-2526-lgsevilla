@@ -24,6 +24,13 @@ export function mountJuegoUI() {
     const wordFeedbackEl = document.getElementById("wordFeedback");
     const wordEntryEl = document.getElementById("wordEntry");
 
+    wordInputEl.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+            e.preventDefault();
+            sendWordBtn.click();
+        }
+    });
+
     const user = JSON.parse(sessionStorage.getItem("usuarioLogeado"));
     if (!user) {
         window.location.replace("index.html");
@@ -92,6 +99,9 @@ export function mountJuegoUI() {
     endBtn.onclick = () => {
         finishPlayerActionPhase(pendingActions);
         pendingActions = { totalDamage: 0, totalHeal: 0 };
+
+        wordFeedbackEl.textContent = "";
+        wordInputEl.value = "";
     };
 
     sendWordBtn.onclick = () => {
@@ -158,6 +168,9 @@ export function mountJuegoUI() {
                 boardEl.appendChild(btn);
             });
 
+            wordFeedbackEl.textContent = "";
+            wordInputEl.value = "";
+
             lastRenderedRound = bs.roundNumber;
         }
 
@@ -171,7 +184,7 @@ export function mountJuegoUI() {
 
 function phaseLabel(phase) {
     switch (phase) {
-        case "word": return "Forma palabras!";
+        case "word": return "Forma palabras en euskera!";
         case "playerAction": return "Es tu turno de acción!";
         case "enemyAction": return "Es el turno del enemigo!";
         default: return "";

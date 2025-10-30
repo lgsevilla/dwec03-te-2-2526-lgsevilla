@@ -5,7 +5,7 @@ import { saveRoundResult } from "../data/roundState.data.js";
 let battleState = null;
 
 export function initBattle(settings) {
-    const enemyBaseHP = 20 + (settings.level -1) * 5;
+    const enemyBaseHP = 10 + (settings.level - 1) * 5;
     battleState = new BattleState({
         playerHP: 30,
         playerMaxHP: 30,
@@ -14,9 +14,10 @@ export function initBattle(settings) {
         roundNumber: 1,
         difficulty: settings.difficulty,
         level: settings.level,
+        carryEnergy: 0,
     });
 
-    startNewWordPhase(settings.roundTime, settings.level);
+    startNewWordPhase(settings.roundTime, settings.level, battleState.carryEnergy);
     return battleState;
 }
 
@@ -103,5 +104,5 @@ function startNewWordPhaseFromBattle() {
     const settings = JSON.parse(sessionStorage.getItem("game_settings"));
     if (!settings) return;
 
-    startNewWordPhase(settings.roundTime, battleState.level);
+    startNewWordPhase(settings.roundTime, battleState.level, battleState.carryEnergy);
 }

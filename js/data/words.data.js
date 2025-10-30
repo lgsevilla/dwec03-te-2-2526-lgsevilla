@@ -1,4 +1,4 @@
-
+// mejor con un API, this dict is bad
 const WORD_LIST = [
     // nature / environment (and their -a / -ak forms)
     "sua", "suak",
@@ -9,7 +9,6 @@ const WORD_LIST = [
     "eguzki", "eguzkia", "eguzkiak",
     "ilargi", "ilargia", "ilargiak",
     "izar", "izara", "izarak",
-    "euria", // "euri" is also used, include both
     "euri", "euria", "euriak",
     "haize", "haizea", "haizeak",
     "itsaso", "itsasoa", "itsasoak",
@@ -20,6 +19,9 @@ const WORD_LIST = [
     "hondar", "hondarra", "hondarrak",
     "uharri", "uharria", "uharriak",
     "basa", "basak",
+    "uda", "udaberri", "udazken", "negua",
+    "hazi", "hazia", "haziak",
+    "hezi", "hezia", "heziak",
 
     // animals
     "otso", "otsoa", "otsoak",
@@ -47,18 +49,18 @@ const WORD_LIST = [
     "esku", "eskua", "eskuak",
     "hanka", "hankak",
     "bizkar", "bizkarra", "bizkarrak",
-    "sorbald", "sorbalda", "sorbladak", // slight stem fudge to keep coverage
+    "sorbald", "sorbalda", "sorbaldak",
     "gorputz", "gorputza", "gorputzak",
-    "bizia", "biziak", // also life as noun
+    "bizia", "biziak",
     "mina", "minak",
     "nekea", "nekeak",
     "zauri", "zauria", "zauriak",
     "arnasa", "arnasak",
-    "arnastu", // verb (no forms)
-    "sendu",   // verb
-    "sendatu", // verb
-    "zaindu",  // verb
-    "nekatuta", // adjective participle
+    "arnastu",
+    "sendu",
+    "sendatu",
+    "zaindu",
+    "nekatuta",
     "pozik",
     "triste",
     "beldur", "beldurra", "beldurrak",
@@ -71,11 +73,10 @@ const WORD_LIST = [
     "osorik",
     "bizirik",
     "hilda",
-    "hil", // verb root 'to die'
-    "hildu", // kill/has died (verbish)
+    "hil",
+    "hildu",
     "aurpegi", "aurpegia", "aurpegiak",
-    "aurpegia", // keep explicit
-    "begiak", // kept, already covered via forms but valid
+    "maila", "mailak",
 
     // combat / danger / power / enemies (and forms)
     "kolpe", "kolpea", "kolpeak",
@@ -91,18 +92,18 @@ const WORD_LIST = [
     "arerio", "arerioa", "arerioak",
     "babes", "babesa", "babesak",
     "zaintza", "zaintzak",
-    "seguru", "segurua", "seguruak", // treating as noun-y 'security'
+    "seguru", "segurua", "seguruak",
     "sorgin", "sorgina", "sorginak",
     "deabru", "deabrua", "deabruak",
     "munstro", "munstroa", "munstroak",
     "izaki", "izakia", "izakiak",
-    "pozoia", "pozoia", "pozoia", "pozoia", // keep; base 'pozoia' is already definite, still usable
+    "pozoia",
     "sumendi", "sumendia", "sumendiak",
     "zaindari", "zaindaria", "zaindariak",
     "zalantza", "zalantzak",
     "misterio", "misterioak",
 
-    // actions / verbs (NO -a/-ak because they're actions, not objects)
+    // actions / verbs (base forms, some nominalized forms kept)
     "etorri",
     "joan",
     "ibil",
@@ -144,12 +145,13 @@ const WORD_LIST = [
     "eskolara",
     "ikasgai", "ikasgaia", "ikasgaiak",
     "atseden", "atsedena", "atsedenak",
-    "jan", "janak", // treating as noun 'meal(s)'
+    "jan", "janak",
     "jaten",
     "edari", "edaria", "edariak",
-    "bidean", // 'on the way'
+    "bidean",
     "sendatu",
     "sendu",
+    "ahaztu",
 
     // people / social / roles (forms)
     "lagun", "laguna", "lagunak",
@@ -164,7 +166,7 @@ const WORD_LIST = [
 
     // objects / household / world / places / time (forms)
     "etxe", "etxea", "etxeak",
-    "etxeko", // adjectival / relational, keep as-is
+    "etxeko",
     "etxera",
     "gela", "gelak",
     "giltza", "giltzak",
@@ -172,14 +174,13 @@ const WORD_LIST = [
     "ate", "atea", "ateak",
     "leiho", "leihoa", "leihoak",
     "mahai", "mahaia", "mahaiak",
-    "aulkia", "aulkiak",
     "aulki", "aulkia", "aulkiak",
-    "ailu", "ailua", "ailuak", // keeping even if rare
+    "ailu", "ailua", "ailuak",
     "armairu", "armairua", "armairuak",
     "liburu", "liburua", "liburuak",
     "papera", "paperak",
     "mapa", "mapak",
-    "oinatz", "oinatza", "oinatzak", // footprint/track-ish
+    "oinatz", "oinatza", "oinatzak",
     "bide", "bidea", "bideak",
     "herria", "herriak",
     "herri", "herria", "herriak",
@@ -188,7 +189,7 @@ const WORD_LIST = [
     "gelako",
     "kale", "kalea", "kaleak",
     "gaua", "gauak",
-    "gau", "gaua", "gauak",
+    "gau", "gauak",
     "eguna", "egunak",
     "egun", "eguna", "egunak",
     "goiza", "goizak",
@@ -202,6 +203,8 @@ const WORD_LIST = [
     "barru", "barrua", "barruak",
     "hurbil", "hurbila", "hurbilak",
     "urrun", "urruna", "urrunak",
+
+    // location / direction / question words / particles
     "behera",
     "behean",
     "goian",
@@ -216,11 +219,15 @@ const WORD_LIST = [
     "zertan",
     "zergatik",
     "nola",
+
+    // food / basic stuff
     "ura", "urak",
-    "ogia", "ogiak",
+    "ogi", "ogia", "ogiak",
     "gatz", "gatza", "gatzak",
     "esne", "esnea", "esneak",
     "arrautz", "arrautza", "arrautzak",
+
+    // states / adverbs of manner / time
     "bero", "beroa", "beroak",
     "hotz", "hotza", "hotzak",
     "gozo", "gozoa", "gozoak",
@@ -230,36 +237,189 @@ const WORD_LIST = [
     "mantso",
     "motel", "motela", "motelak",
     "berehala",
+    "goiz",
+    "berandu",
+    "ondo",
+    "gaizki",
+    "adi",
+    "prest",
+    "atzo",
 
     // descriptive / adjectives / qualities (forms where noun-y)
     "handi", "handia", "handiak",
     "txiki", "txikia", "txikiak",
     "berri", "berria", "berriak",
     "zaharra", "zaharrak",
-    "zaharra", // keep singular definite as written
-    "azkar", "azkarrak", "azkarra",
+    "azkar", "azkarra", "azkarrak",
     "garbi", "garbia", "garbiak",
     "zikina", "zikinak",
+    "zikin", "zikina", "zikinak",
     "txarra", "txarrak",
     "ona", "onak",
-    "erdiko", // relational adjective
+    "erdiko",
     "magia", "magiak",
-    "iluna", "ilunak",
     "ilun", "iluna", "ilunak",
+    "iluna", "ilunak",
     "argi", "argia", "argiak",
-    "argia", "argi", "argiak",
-    "ondo",
-    "gaizki",
     "seguru", "segurua", "seguruak",
     "misterio", "misterioak",
     "arraro", "arraroa", "arraroak",
     "beldurra", "beldurrak",
+    "eder", "edera", "ederak",
+    "itsusi", "itsusia", "itsusiak",
+    "itsu", "itsua", "itsuak",
+    "gor", "gorrak",
+    "zuri", "zuria", "zuriak",
+    "beltz", "beltza", "beltzak",
+    "gorria", "gorriak",
+    "urdin", "urdina", "urdinak",
+    "berde", "berdea", "berdeak",
+    "gris", "grisa", "grisak",
+    "marroi", "marroia", "marroiak",
+    "normal", "normala", "normalak",
+    "alai", "alaia", "alaiak",
+    "bakarti", "bakartia", "bakartiak",
+    "gaixo", "gaixoa", "gaixoak",
+    "ahul", "ahula", "ahulak",
+    "hila", "hilak",
+    "bila",
+    "leial", "leiala", "leialak",
+    "gaizto", "gaiztoa", "gaiztoak",
+    "garesti", "garestia", "garestiak",
+    "merke", "merkea", "merkeak",
+    "berdin", "berdina", "berdinak",
+    "estu", "estua", "estuak",
+    "zabal", "zabala", "zabalak",
+    "luze", "luzea", "luzeak",
+    "labur", "laburra", "laburrak",
+    "heze", "hezea", "hezeak",
+    "lehor", "lehorra", "lehorrak",
+    "gazi", "gazia", "gaziak",
+    "arriskuts",
+    "arriskutsu", "arriskutsua", "arriskutsuak",
+    "arte", "artea", "arteak",
+    "gaur", "gaurak",
+    "zen",
+    "gazte", "gaztea", "gazteak",
+    "zale", "zalea", "zaleak",
 
-    // extras / rare / maybe weird (kept for flavor, still filtered by length)
-    "sukurts", // weird but here if you want it
-    "garrantzi", // >8, will be filtered out
-    "ikusgarri", // >8, will be filtered
-    "arriskuts"  // borderline truncated form
+    // core grammar / connectors / pronouns / auxiliaries / super common forms
+    "eta",
+    "edo",
+    "baina",
+    "ala",
+    "ere",
+    "bezala",
+    "zein",
+    "nahiz",
+    "baita",
+    "agian",
+    "beraz",
+    "hala",
+    "oso",
+    "asko",
+    "gutxi",
+    "pixka",
+
+    "nor",
+    "nork",
+    "nori",
+    "zer",
+    "zergatik", // (already above, safe)
+    "nork",
+    "hau", "hauek",
+    "hori", "horiek",
+    "hura", "haiek",
+
+    "ni",
+    "zu",
+    "bera",
+    "gu",
+    "zuek",
+    "haiek",
+
+    "ari",
+
+    // auxiliary / conjugated "izan/ukan/egon" forms players will absolutely type
+    "naiz",
+    "zara",
+    "da",
+    "gara",
+    "zarete",
+    "dira",
+
+    "dut",
+    "duzu",
+    "du",
+    "ditu",
+    "dugu",
+    "dute",
+
+    "nago",
+    "zaude",
+    "dago",
+    "gaude",
+    "daude",
+
+    // additional core verbs and common variants / participles
+    "izan", "izango", "izaten",
+    "egon", "egoten",
+    "egin", "egiten",
+    "esan", "esaten",
+    "eduki", "edukia",
+    "ematen",
+    "hartu", "hartzen",
+    "ikasi", "ikasiko",
+    "irakurri", "irakurtzen",
+    "idatzi", "idazten",
+    "ikusten",
+    "entzuten",
+    "pentsatzen",
+    "nahi", "nahia",
+    "edaten",
+    "jaten",
+    "ibiltzen",
+    "saltatzen",
+    "erortzen",
+    "igotzen",
+    "ixten",
+    "irekitzen",
+    "kentzen",
+    "ekartzen",
+    "laguntzen",
+    "babesten",
+    "zaintzen",
+    "salbatzen",
+    "sendatzen",
+    "itxaroten",
+    "bilatzen",
+    "aurkitzen",
+    "joaten",
+    "etortzen",
+    "gelditu", "geldi",
+    "zaurituta",
+    "sinetsi", "sinesten",
+    "begiratu", "begiratzen",
+    "deitu", "deitzen",
+    "ihardun", "iharduten",
+    "borrokatu", "borrokatzen",
+    "defendatu", "defendatzen",
+    "aldatu", "aldatzen",
+    "sortu", "sortzen",
+    "piztu", "pizten",
+    "itzali", "itzaltzen",
+    "irabazi", "irabazten",
+    "galdu", "galtzen",
+    "bizi", "bizitzen",
+    "hiltzen",
+    "uste", "ustetu",
+    "ezer", "ezin",
+    "bere", "gure", "zure", "nire", "zuen", "haien",
+
+    // extras / rare / maybe weird
+    "sukurts",
+    "garrantzi",
+    "ikusgarri"
 ];
 
 function isAcceptableWord(w) {

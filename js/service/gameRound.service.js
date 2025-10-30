@@ -1,7 +1,7 @@
 import { RoundState } from "../model/roundState.model.js";
 import { loadGameSettings } from "../data/gameSettings.data.js";
 import { isWordValidBasque, WORDS_BASQUE } from "../data/words.data.js";
-import { applyPlayerActionsAndAdvance } from "./battle.service.js";
+import { applyPlayerActionsAndAdvance, getBattleState } from "./battle.service.js";
 
 let roundState = null;
 let boardCells = [];
@@ -55,14 +55,19 @@ function randomLetter() {
     return LETTER_POOL[i];
 }
 
-function pickSeedWords(howMany = 3) {
-    const maxCount = Math.min(howMany, WORDS_BASQUE.length);
+function pickSeedWordsForBoard(level) {
+    let target = 2;
+    if (level >= 3) target = 3;
+    if (level >= 5) target = 4;
+
+    const pool = WORDS_BASQUE.filter(w => w.length >= 3 && w.length <= 7);
 
     const chosen = new Set();
-    while (chosen.size < maxCount) {
-        const w = WORDS_BASQUE[Math.floor(Math.random() * WORDS_BASQUE.length)];
+    while (chosen.size < target && chosen.size < pool.length) {
+        const w = pool[Math.floor(Math.random() * pool.length)];
         chosen.add(w);
     }
+
     return Array.from(chosen);
 }
 
@@ -77,11 +82,7 @@ function shuffleArray(arr) {
 export function generateBoardCells(level) {
     const totalCells = 8 + (level - 1);
 
-    let seedCount = 3;
-    if (level >= 3) seedCount = 4;
-    if (level >= 5) seedCount = 5;
-
-    const seeds = pickSeedWords(seedCount);
+    const seeds = pickSeedWordsForBoard(level);
 
     const letters = [];
     seeds.forEach(w => {
@@ -98,19 +99,17 @@ export function generateBoardCells(level) {
 
     shuffleArray(trimmed);
 
-    const cells = trimmed.map((ch, idx) => ({
+    return trimmed.map((ch, idx) => ({
         id: idx,
         letter: ch,
         selected: false,
     }));
-
-    return cells;
 }
 
-export function startNewWordPhase(roundTime, level) {
+export function startNewWordPhase(roundTime, level, carryEnergy = 0) {
     roundState = new RoundState({
         timeLeft: roundTime,
-        energyThisRound: 0,
+        energyThisRound: carryEnergy,
         phase: "word",
         usedWords: []
     });
@@ -202,6 +201,11 @@ export function submitWord(rawWord) {
 
 export function finishPlayerActionPhase(pendingActions) {
     if (!roundState || roundState.phase !== "playerAction") return;
+
+    const battle = getBattleState();
+    if (battle) {
+        battle.carryEnergy = roundState.energyThisRound;
+    }
 
     roundState.phase = "enemyAction";
 

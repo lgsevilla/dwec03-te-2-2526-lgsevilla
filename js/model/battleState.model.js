@@ -6,7 +6,8 @@ export class BattleState {
         enemyMaxHP = 20,
         roundNumber = 1,
         difficulty = "easy",
-        level = 1
+        level = 1,
+        carryEnergy = 0
     }) {
         this.playerHP = playerHP;
         this.playerMaxHP = playerMaxHP;
@@ -15,5 +16,6 @@ export class BattleState {
         this.roundNumber = roundNumber;
         this.difficulty = difficulty;
         this.level = level;
+        this.carryEnergy = carryEnergy;
     }
 }
