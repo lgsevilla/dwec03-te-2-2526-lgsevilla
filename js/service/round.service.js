@@ -26,6 +26,7 @@ export function generateBoardCells(level) {
     return Array.from({ length: total }, (_, i) => ({ id: i, selected: false}));
 }
 
+// TODO: Unused old functions - non disruptive, but should probably delete so round and gameRound can be merged into single service
 export function handleCellClick(cellObj) {
     if (!roundState || roundState.phase !== "word") return;
 

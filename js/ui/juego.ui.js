@@ -1,4 +1,8 @@
-import { initBattle, getBattleState } from "../service/battle.service.js";
+import {
+    initBattle,
+    getBattleState,
+    applyInstantPlayerAttack,
+    applyInstantPlayerHeal } from "../service/battle.service.js";
 import {
     getRoundState,
     getBoardCells,
@@ -84,29 +88,38 @@ export function mountJuegoUI() {
 
     quickBtn.onclick = () => {
         const rs = getRoundState();
+        if (!rs) return;
+
         if (rs.energyThisRound >= 1) {
             rs.energyThisRound -= 1;
-            pendingActions.totalDamage += 1;
+            applyInstantPlayerAttack(1);
         }
     };
 
     strongBtn.onclick = () => {
         const rs = getRoundState();
+        if (!rs) return;
+
         if (rs.energyThisRound >= 3) {
             rs.energyThisRound -= 3;
-            pendingActions.totalDamage += 5;
+            applyInstantPlayerAttack(5);
         }
     };
 
     healBtn.onclick = () => {
         const rs = getRoundState();
+        if (!rs) return;
+
         if (rs.energyThisRound >= 2) {
             rs.energyThisRound -= 2;
-            pendingActions.totalHeal += 4;
+            applyInstantPlayerHeal(4);
         }
     };
 
     endBtn.onclick = () => {
+        const rs = getRoundState();
+        if (!rs) return;
+
         finishPlayerActionPhase(pendingActions);
         pendingActions = { totalDamage: 0, totalHeal: 0 };
 

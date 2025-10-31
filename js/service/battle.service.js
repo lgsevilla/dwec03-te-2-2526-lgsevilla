@@ -28,19 +28,6 @@ export function getBattleState() {
 export function applyPlayerActionsAndAdvance(playerActions) {
     if (!battleState) return;
 
-    const dmg = playerActions.totalDamage || 0;
-    const heal = playerActions.totalHeal || 0;
-
-    battleState.enemyHP -= dmg;
-    if (battleState.enemyHP < 0) {
-        battleState.enemyHP = 0;
-    }
-
-    battleState.playerHP += heal;
-    if (battleState.playerHP > battleState.playerMaxHP) {
-        battleState.playerHP = battleState.playerMaxHP;
-    }
-
     if (battleState.enemyHP <= 0) {
         saveRoundResult({
             outcome: "win",
@@ -105,4 +92,46 @@ function startNewWordPhaseFromBattle() {
     if (!settings) return;
 
     startNewWordPhase(settings.roundTime, battleState.level, battleState.carryEnergy);
+}
+
+// Trial, want to see if I can change behavior of attack button so that its not necessary to click trial
+// and then click end turn
+
+export function applyInstantPlayerAttack(damage) {
+    if (!battleState) return;
+
+    // Deal damage now
+    battleState.enemyHP -= damage;
+    if (battleState.enemyHP < 0) {
+        battleState.enemyHP = 0;
+    }
+
+    // Check win condition immediately after dealing damage
+    if (battleState.enemyHP <= 0) {
+        saveRoundResult({
+            outcome: "win",
+            level: battleState.level,
+            difficulty: battleState.difficulty,
+        });
+
+        sessionStorage.setItem("battleResult", JSON.stringify({
+            outcome: "win",
+            level: battleState.level,
+            difficulty: battleState.difficulty,
+            playerHP: battleState.playerHP,
+            enemyHP: battleState.enemyHP,
+            roundNumber: battleState.roundNumber,
+        }));
+
+        window.location.href = "resultados.html";
+    }
+}
+
+export function applyInstantPlayerHeal(healAmount) {
+    if (!battleState) return;
+
+    battleState.playerHP += healAmount;
+    if (battleState.playerHP > battleState.playerMaxHP) {
+        battleState.playerHP = battleState.playerMaxHP;
+    }
 }
